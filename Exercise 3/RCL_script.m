@@ -9,7 +9,9 @@ init1 = 0; %the initial inductor current
 init2 = 500e-9; %the initial capacitor charge
 
 
-%step
+%--------------------------------------------------------------------------
+%Step signal at t=0 and amplitude 5V
+%--------------------------------------------------------------------------
 name = '5V step input';
 Vin = @(t)  5*(t>=0);
 eqn1 = @(x, y, z) z; %dy/dx
@@ -23,7 +25,9 @@ xlabel('Time (s)')
 ylabel('Voltage (V)')
 % hold on;
 
-%impulse
+%--------------------------------------------------------------------------
+%Impulse signal at t=0 and amplitude 5V
+%--------------------------------------------------------------------------
 name = 'Vin = 5V Impulse';
 tau = 3e-6;
 Vin = @(t) 5*exp(-t^2/tau);
@@ -37,9 +41,12 @@ title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 
-%square 109
+%--------------------------------------------------------------------------
+%Square wave of amplitude 5V and frequencies 109Hz, 5Hz, and 500Hz
+%--------------------------------------------------------------------------
 name = 'Vin = Square Wave, A=5, f=109Hz';
 figure;
+%f=109
 subplot(2,2,1);
 Vin = @(t) 5*square(t*2*pi*109);
 eqn1 = @(x, y, z) z; %dy/dx
@@ -51,7 +58,7 @@ title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 
-%square 5
+%f=5
 name = 'Vin = Square Wave, A=5, f=5Hz';
 subplot(2,2,2);
 Vin = @(t) 5*square(t*2*pi*5);
@@ -64,7 +71,7 @@ title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 
-%square 500
+%f=500
 name = 'Vin = Square Wave, A=5, f=500Hz';
 subplot(2,2,3);
 Vin = @(t) 5*square(t*2*pi*500);
@@ -76,8 +83,10 @@ plot(x, Vout);
 title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
-
-%sine 109
+%--------------------------------------------------------------------------
+%Sine wave of amplitude 5V and frequencies 109Hz, 5Hz, and 500Hz
+%--------------------------------------------------------------------------
+%f=109
 name = 'Vin = Sine Wave, A=5, f=109Hz';
 figure;
 subplot(2,2,1);
@@ -91,7 +100,7 @@ title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 
-%sine 5
+%f=5
 name = 'Vin = Sine Wave, A=5, f=5Hz';
 subplot(2,2,2);
 Vin = @(t) 5*sin(t*2*pi*5);
@@ -104,7 +113,7 @@ title(name)
 xlabel('Time (s)')
 ylabel('Voltage (V)')
 
-%sine 500
+%f=500
 name = 'Vin = Sine Wave, A=5, f=500Hz';
 subplot(2,2,3);
 Vin = @(t) 5*sin(t*2*pi*500);
