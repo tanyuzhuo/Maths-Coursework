@@ -8,10 +8,17 @@ function RK2_script()
 %a constant at the same value as the input, therefore no effort is made to
 %show the steady state. 
 
-%The period functions have two plots made, one with the transient behaviour
+%The periodic functions have two plots made, one with the transient behaviour
 %(the initial response to the initial condition) as well as the steady
 %state response. This is due to the changing nature of the input signal,
 %meaning the output voltage is no longer trivial. 
+
+%Each call is of the same structure:
+%Input signal
+%Defining the differential equation
+%Calling the RK2 function
+%Plotting the output
+
 %--------------------------------------------------------------------------
 %Step signal at t=0 and amplitude 2.5V
 %--------------------------------------------------------------------------
@@ -21,9 +28,9 @@ eqn = @(t, Vout)10000*(Vin(t)-Vout);
 plot(x,y)
 
 %--------------------------------------------------------------------------
-%Impulsive signal and delay: Vin=2.5*exp(-t^2/100us)
+%Impulsive signal and delay: Vin=2.5*exp(-t^2/100(us)^2)
 %--------------------------------------------------------------------------
-Vin = @(t) 2.5*exp((-t.^2)/0.0000001);
+Vin = @(t) 2.5*exp((-t.^2)/1e-8);
 eqn = @(t, Vout) 10000*(Vin(t)-Vout);
 [x,y] = RK2(eqn, 5, [0 1e-3], 0.0000001);
 plot(x,y)
@@ -31,7 +38,7 @@ plot(x,y)
 %--------------------------------------------------------------------------
 %Impulsive signal and delay: Vin=2.5*exp(-t/100us)
 %--------------------------------------------------------------------------
-Vin = @(t)(2.5*exp((-t)/0.0001));
+Vin = @(t)(2.5*exp((-t)/1e-4));
 eqn = @(t, Vout)(10000*(Vin(t)-Vout));
 [x,y] = RK2(eqn, 5, [0 1e-3], 0.0000001);
 plot(x,y)

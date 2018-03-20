@@ -1,20 +1,16 @@
 function [xFull, yFull] = RK2(eqn, init, time, h)
-%Function to take in an equation and use one of the three specified methods
-%to give a solution. 
-%the desired first order ODE should be submitted through the eqn variable,
-%init is the initial condition y(x0), time is a vector where the first 
-%value is the start time, and the second value is the finish time, and h is
-%the associated step size.
-%Highlighted by comments are the lines that can be changed to switch
-%between Heun's method, the midpoint method, and Ralston's method. This is
-%done by just changing the coefficient values, rather than the full
-%equation found in the for loop.
+%This function returns two vectors, one of the time range used for
+%calculations, and the other with the output of the differential equation. 
 
-%This function in its current state will print a plot of the ODE.
+%eqn: the differential equation to be used, in the form y' = f(x,y)
+%init: the value of the output at the first time point (initial condition)
+%time: [t0 tf] defining the time range to be used
+%h: the step size to be used
 
-xFull = (time(1):h:time(2))';
-yFull = 0*xFull;
-yFull(1)=init;
+%xFull and yFull are defined at the start for efficiency
+xFull = (time(1):h:time(2))'; %define the time axis 
+yFull = 0*xFull; %yFull is defined in terms of xFull, ensuring that they are of the same size
+yFull(1)=init; %defining the initial condition
 
 %-----------------------------------------------------------------------
 %UNCOMMENT FOR HEUN:
@@ -26,10 +22,10 @@ a=0.5; b=0.5; p=1; q=1;
 %-----------------------------------------------------------------------
 
 
-for i = 1:(time(2)-time(1))/h
-    xTemp = xFull(i);
+for i = 1:(time(2)-time(1))/h %the loop is repeated for N iterations, where N is the number of sections
+    xTemp = xFull(i); %xTemp and yTemp are defined for efficency so that xFull and yFull don't need to be constantly accessed
     yTemp = yFull(i);
-    k1 = eqn(xTemp, yTemp);
+    k1 = eqn(xTemp, yTemp); %This part defines k1 and k2 to produce yFull
     k2 = eqn(xTemp+p*h, yTemp+h*q*k1);
     yFull(i+1) = yTemp + h*(a*k1+b*k2);
 end  
